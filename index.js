@@ -1,8 +1,8 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
-const Shapes = require("./lib/shapes.js");
+const { Shapes, Circle, Square, Triangle } = require("./lib/shapes.js");
 
-const generateSVG = ({ text, shape, textColor, shapeColor }) => {
+const generateSVG = () => {
   inquirer
     .prompt([
       {
@@ -16,7 +16,7 @@ const generateSVG = ({ text, shape, textColor, shapeColor }) => {
         name: "textColor",
       },
       {
-        type: "input",
+        type: "list",
         message: "what shape would you like for your logo?",
         name: "shape",
         choices: ["circle", "triangle", "square"],
@@ -28,10 +28,24 @@ const generateSVG = ({ text, shape, textColor, shapeColor }) => {
       },
     ])
     .then((results) => {
-      const svgPageContent = generateSVG(results);
+      let shape;
+      if (results.shape === "circle") {
+        shape = new Circle(results.text, results.textColor, results.shapeColor);
+      } else if (results.shape === "square") {
+        shape = new Square(results.text, results.textColor, results.shapeColor);
+      } else {
+        shape = new Triangle(
+          results.text,
+          results.textColor,
+          results.shapeColor
+        );
+      }
 
-      fs.writeFile("logo.svg", svgPageContent, (err) =>
+      const svgPageContent = shape.render();
+
+      fs.writeFile("./examples/logo.svg", svgPageContent, (err) =>
         err ? console.log(err) : console.log("Success!")
       );
     });
 };
+generateSVG();
