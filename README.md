@@ -18,6 +18,9 @@ Generates an SVG LOGO
 Google drive link for video walk-through:
 https://drive.google.com/file/d/1EJlFx_t91Rm_i63WnvwwCBrwqzEmcOP0/view
 
+github repo link:
+https://github.com/OutlawDisco/SVG-Logo-Maker
+
 ## Credits
 
 express.js
